@@ -1,0 +1,11 @@
+DROP TABLE tells CASCADE;
+
+CREATE TABLE tells (
+  tid SERIAL PRIMARY KEY,
+  question VARCHAR(280) NOT NULL,
+  answer VARCHAR(1000),
+  answered BOOLEAN DEFAULT FALSE,
+  likes INTEGER DEFAULT 0, 
+  date_asked TIMESTAMP DEFAULT NOW(),
+  date_answered TIMESTAMP
+)
