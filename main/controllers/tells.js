@@ -78,7 +78,7 @@ router.put("/answer", (req, res, next) => {
   const tellId = req.body.tellId;
   const values = [sanitize(req.body.answer), req.body.tellId];
   pool.query(
-    `UPDATE tells SET answer = $1, date_answered = NOW()
+    `UPDATE tells SET answer = $1, answered = TRUE, date_answered = NOW()
               WHERE tid = $2 RETURNING *`,
     values,
     (q_err, q_res) => {
