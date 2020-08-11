@@ -1,4 +1,4 @@
-var createError = require("http-errors");
+require("dotenv").config();
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
@@ -12,7 +12,7 @@ var visitorRouter = require("./controllers/visitors");
 var app = express();
 
 var corsOptions = {
-  origin: "http://localhost:3000",
+  origin: process.env.FE_URL,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));

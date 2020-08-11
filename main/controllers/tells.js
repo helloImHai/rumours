@@ -39,6 +39,11 @@ router.get("/tell", (req, res, next) => {
 });
 
 router.delete("/tell", (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth !== process.env.AUTH) {
+    res.status(403).json("Invalid auth");
+    return;
+  }
   const tellId = req.query.tellId;
   pool.query(
     `DELETE FROM tells WHERE tid=$1 RETURNING *`,
@@ -79,6 +84,11 @@ router.post("/new", (req, res, next) => {
 });
 
 router.put("/answer", (req, res, next) => {
+  const auth = req.headers.authorization;
+  if (auth !== process.env.AUTH) {
+    res.status(403).json("Invalid auth");
+    return;
+  }
   const tellId = req.body.tellId;
   const values = [sanitize(req.body.answer), req.body.tellId];
   pool.query(
@@ -102,6 +112,11 @@ router.put("/answer", (req, res, next) => {
 });
 
 router.get("/admin/all", (req, res, next) => {
+  const auth = req.headers.authorization;
+  if (auth !== process.env.AUTH) {
+    res.status(403).json("Invalid auth");
+    return;
+  }
   pool.query(
     `SELECT * FROM tells ORDER BY date_answered DESC`,
     (q_err, q_res) => {
