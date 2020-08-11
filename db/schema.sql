@@ -1,4 +1,5 @@
 DROP TABLE tells CASCADE;
+DROP TABLE visitors CASCADE;
 
 CREATE TABLE tells (
   tid SERIAL PRIMARY KEY,
@@ -8,4 +9,9 @@ CREATE TABLE tells (
   likes INTEGER DEFAULT 0, 
   date_asked TIMESTAMP DEFAULT NOW(),
   date_answered TIMESTAMP
-)
+);
+
+CREATE TABLE visitors (
+  vid SERIAL PRIMARY KEY,
+  key VARCHAR(20)
+);

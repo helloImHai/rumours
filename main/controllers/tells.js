@@ -8,8 +8,12 @@ var pool = require("../db");
 
 router.get("/tells", (req, res, next) => {
   pool.query(
-    `SELECT * FROM tells ORDER BY date_answered DESC`,
+    `SELECT * FROM tells where answered = TRUE ORDER BY date_answered DESC`,
     (q_err, q_res) => {
+      if (q_err) {
+        res.status(400);
+        return res.json(q_err.message);
+      }
       res.json(q_res.rows);
     }
   );
@@ -93,6 +97,15 @@ router.put("/answer", (req, res, next) => {
         return res.json(`tell with id ${tellId} does not exist`);
       }
       res.json(q_res.rows[0]);
+    }
+  );
+});
+
+router.get("/admin/all", (req, res, next) => {
+  pool.query(
+    `SELECT * FROM tells ORDER BY date_answered DESC`,
+    (q_err, q_res) => {
+      res.json(q_res.rows);
     }
   );
 });
