@@ -125,6 +125,20 @@ router.get("/admin/all", (req, res, next) => {
   );
 });
 
+router.get("/admin/all/unanswered", (req, res, next) => {
+  const auth = req.headers.authorization;
+  if (auth !== process.env.AUTH) {
+    res.status(403).json("Invalid auth");
+    return;
+  }
+  pool.query(
+    `SELECT * FROM tells WHERE answered = FALSE ORDER BY date_asked DESC`,
+    (q_err, q_res) => {
+      res.json(q_res.rows);
+    }
+  );
+});
+
 function sanitize(str) {
   // return str.replace(/'/g, "''");
   return str;
