@@ -8,7 +8,11 @@ var pool = require("../db");
 
 router.get("/tells", (req, res, next) => {
   pool.query(
-    `SELECT * FROM tells where answered = TRUE ORDER BY date_answered DESC`,
+    `SELECT t.tid, question, date_answered, answer, count(distinct lid) as likes
+    FROM tells t LEFT JOIN likes l ON t.tid = l.tid
+    WHERE answered = TRUE 
+    GROUP BY t.tid
+    ORDER BY date_answered DESC`,
     (q_err, q_res) => {
       if (q_err) {
         res.status(400);

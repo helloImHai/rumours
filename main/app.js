@@ -8,6 +8,7 @@ var cors = require("cors");
 var indexRouter = require("./controllers/index");
 var tellRouter = require("./controllers/tells");
 var visitorRouter = require("./controllers/visitors");
+var likesRouteer = require("./controllers/likes");
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/tell", tellRouter);
 app.use("/visitors", visitorRouter);
+app.use("/likes", likesRouteer);
 app.use("/", indexRouter);
 
 module.exports = app;
